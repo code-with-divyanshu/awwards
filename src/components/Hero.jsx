@@ -6,13 +6,19 @@ const Hero = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedVideos, setLoadedVideos] = useState(0);
 
-  const totalVideos = 4;
+  const totalVideos = 3;
   const nextVideoRef = useRef(null);
+
+  const handleVideoLoad = () => {
+    setLoadedVideos((prev) => prev + 1);
+  };
+
+  const upcomingVideoIndex = (currentIndex % totalVideos) + 1;
 
   const handleMiniVdClick = () => {
     setHasClicked(true);
 
-    setCurrentIndex((prev) => prev + 1);
+    setCurrentIndex(upcomingVideoIndex);
   };
 
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
@@ -24,18 +30,31 @@ const Hero = () => {
         className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75"
       >
         <div>
-          <div className="maxk-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
-            <div onClick={handleMiniVdClick} className="origin-center">
+          <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
+            <div
+              onClick={handleMiniVdClick}
+              className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+            >
               <video
                 ref={nextVideoRef}
-                src={getVideoSrc(currentIndex + 1)}
+                src={getVideoSrc(upcomingVideoIndex)}
                 loop
                 muted
                 id="current-video"
                 className="size-64 origin-center scale-150 object-cover object-center"
-              ></video>
+                onLoadedData={handleVideoLoad}
+              />
             </div>
           </div>
+          <video
+            ref={nextVideoRef}
+            src={getVideoSrc(currentIndex)}
+            loop
+            muted
+            id="next-video"
+            className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
+            onLoadedData={handleVideoLoad}
+          />
         </div>
       </div>
     </div>
