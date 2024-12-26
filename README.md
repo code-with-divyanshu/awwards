@@ -1,5 +1,4 @@
 # Awward winning Animated Website
 
-This template provides a minimal setup to get React working in Vite with HMR a
-
-Currently, two official plugins are available:
+This is Animated Website for Gaming App.
+This websites have a much good and amazing, animated feature.
